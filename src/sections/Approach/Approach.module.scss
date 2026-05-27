@@ -1,0 +1,81 @@
+@use "../../styles/index" as *;
+
+.approach {
+  padding-block: $space-4xl;
+  background-color: $color-surface;
+  border-block: 1px solid $color-border;
+}
+
+.inner {
+  @include container;
+}
+
+.heading {
+  font-size: $fs-3xl;
+  font-weight: $fw-bold;
+  letter-spacing: -0.02em;
+  margin-bottom: $space-2xl;
+
+  @include respond-to("md") {
+    font-size: $fs-4xl;
+  }
+}
+
+.steps {
+  display: grid;
+  gap: $space-lg;
+
+  @include respond-to("sm") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to("lg") {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.step {
+  padding: $space-xl;
+  background-color: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.num {
+  display: inline-block;
+  margin-bottom: $space-md;
+  font-size: $fs-2xl;
+  font-weight: $fw-bold;
+  color: $color-accent;
+}
+
+.stepTitle {
+  font-size: $fs-lg;
+  font-weight: $fw-semibold;
+  margin-bottom: $space-xs;
+}
+
+.stepText {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.ai {
+  margin-top: $space-2xl;
+  padding: $space-xl;
+  background-color: rgba($color-accent, 0.06);
+  border: 1px solid rgba($color-accent, 0.2);
+  border-radius: $radius-lg;
+}
+
+.aiTitle {
+  font-size: $fs-xl;
+  font-weight: $fw-semibold;
+  margin-bottom: $space-sm;
+}
+
+.aiText {
+  max-width: 720px;
+  font-size: $fs-base;
+  color: $color-text-muted;
+}
