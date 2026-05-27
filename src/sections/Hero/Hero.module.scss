@@ -1,0 +1,82 @@
+@use "../../styles/index" as *;
+
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: 90vh;
+  padding-block: $space-4xl;
+}
+
+.inner {
+  @include container;
+  max-width: 760px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: $space-md;
+  padding: $space-2xs $space-sm;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  color: $color-accent;
+  background-color: rgba($color-accent, 0.1);
+  border-radius: $radius-full;
+}
+
+.title {
+  font-size: $fs-4xl;
+  font-weight: $fw-bold;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+
+  @include respond-to("md") {
+    font-size: $fs-5xl;
+  }
+}
+
+.subtitle {
+  margin-top: $space-lg;
+  font-size: $fs-lg;
+  color: $color-text-muted;
+
+  @include respond-to("md") {
+    font-size: $fs-xl;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+  margin-top: $space-2xl;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-sm $space-xl;
+  font-weight: $fw-medium;
+  border-radius: $radius-md;
+  transition: $transition-base;
+}
+
+.primary {
+  color: #fff;
+  background-color: $color-accent;
+
+  &:hover {
+    background-color: $color-accent-hover;
+  }
+}
+
+.secondary {
+  color: $color-text;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
