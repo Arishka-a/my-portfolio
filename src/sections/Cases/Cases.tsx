@@ -1,15 +1,10 @@
 import styles from "./Cases.module.scss";
 
-interface Contribution {
-  label: string;
-  intro?: string;
-  points: string[];
-}
-
 interface CaseItem {
   title: string;
   tagline: string;
-  contributions: Contribution[];
+  did: string[];
+  aiHelped: string;
   stack: string[];
   links?: { label: string; href: string }[];
 }
@@ -19,72 +14,50 @@ const cases: CaseItem[] = [
     title: "MOPS — управление сетевым оборудованием",
     tagline:
       "Внутренняя система управления оборудованием и стендами автотестирования (Форт-Телеком).",
-    contributions: [
-      {
-        label: "Фронтенд",
-        intro: "Лично реализовала ",
-        points: [
-          "SPA на React 19 + TypeScript с feature-based архитектурой (домены auth, devices, images, bolid)",
-          "Состояние на Redux Toolkit и RTK Query, JWT-аутентификация с redux-persist",
-          "Конечный автомат прошивки устройств и SSH-консоль с очередью команд",
-        ],
-      },
-      {
-        label: "Интеграция с API",
-        points: [
-          "Лично реализовала подключение REST-эндпоинтов и кэширование на RTK Query",
-          "AI помог с типизацией запросов и шаблонным кодом кастомных хуков",
-        ],
-      },
+    did: [
+      "SPA на React 19 + TypeScript с feature-based архитектурой: 5 страниц, домены auth, devices, images, bolid",
+      "Управление состоянием через Redux Toolkit и RTK Query с автоматической инвалидацией кэша по тегам",
+      "JWT-аутентификация с redux-persist, автоматический выход по истечении токена и обработка 401-ответов",
+      "Оптимистичные обновления при бронировании устройств с откатом при ошибке сервера",
+      "Конечный автомат прошивки (install → reload → done/error) с сохранением состояния между перезагрузками",
+      "SSH-консоль с очередью команд, синхронным и асинхронным режимами; polling длительных задач через кастомные хуки",
+      "Загрузка прошивок через FormData с drag-and-drop, вкладочный интерфейс страницы устройства",
     ],
+    aiHelped: "типизация запросов и шаблонный код кастомных хуков",
     stack: ["React 19", "TypeScript", "Redux Toolkit", "RTK Query", "Tailwind CSS"],
     links: [{ label: "GitHub", href: "https://github.com/Arishka-a/MOPS" }],
   },
   {
     title: "NBA Offer Manager (дипломный проект)",
     tagline: "Система управления офферами Next Best Action. Заказчик — ЭР-Телеком.",
-    contributions: [
-      {
-        label: "Фронтенд",
-        intro: "Лично реализовала ",
-        points: [
-          "SPA на React 19: защищённые маршруты и ролевой доступ (Admin / Analyst / Operator)",
-          "Глобальное состояние через AuthContext + useAuth, дашборды на Recharts",
-          "CRUD с модалками, поиск с debounce, фильтрация, пагинация, импорт/экспорт CSV/Excel/PDF",
-        ],
-      },
-      {
-        label: "Бэкенд / API",
-        points: [
-          "Лично реализовала бэкенд на Node.js / Express (контроллеры, middleware, сервисы отчётов и email), схему PostgreSQL и Docker Compose",
-          "AI помог с настройкой Axios-интерсепторов и единообразной обработкой ошибок",
-        ],
-      },
+    did: [
+      "SPA на React 19 из 18 страниц с переиспользуемыми компонентами",
+      "Защищённые маршруты (PrivateRoute HOC) и ролевой доступ для 3 типов пользователей (Admin / Analyst / Operator)",
+      "Глобальное состояние через Context API (AuthContext) с кастомным хуком useAuth",
+      "11 сервисных модулей (Service Layer) поверх 40+ REST-эндпоинтов, HTTP-клиент Axios с интерсепторами",
+      "Интерактивные дашборды на Recharts; CRUD с модалками, поиск с debounce, фильтрация, сортировка, пагинация",
+      "Конструктор условий и фильтров (FilterBuilder, ConditionManager), импорт/экспорт CSV / Excel / PDF",
+      "Бэкенд на Node.js / Express (11 контроллеров, middleware, сервисы отчётов и email), схема PostgreSQL и Docker Compose, unit-тесты на Vitest",
     ],
+    aiHelped: "настройка Axios-интерсепторов и единообразная обработка ошибок",
     stack: ["React 19", "React Router", "Node.js", "Express", "PostgreSQL", "Docker"],
-    links: [{ label: "GitHub", href: "https://github.com/Arishka-a/diplom_NBA_offer_manager" }],
+    links: [
+      { label: "GitHub", href: "https://github.com/Arishka-a/diplom_NBA_offer_manager" },
+    ],
   },
   {
     title: "Лендинг-портфолио (этот сайт)",
     tagline:
       "Одностраничная презентация с рабочей формой обратной связи и AI-помощником.",
-    contributions: [
-      {
-        label: "Фронтенд",
-        intro: "Лично реализовала ",
-        points: [
-          "Вёрстку на SCSS-модулях с адаптивностью",
-          "Форма с валидацией и состояниями loading / success / error",
-        ],
-      },
-      {
-        label: "API",
-        points: [
-          "Лично реализовала serverless-роут на Next.js для отправки писем — владельцу и копией пользователю",
-          "AI помог на этапе черновиков и разбора ошибок — весь код перепроверяла",
-        ],
-      },
+    did: [
+      "Адаптивная вёрстка на SCSS-модулях с дизайн-токенами (переменные, брейкпоинты, миксины)",
+      "Форма обратной связи: имя, телефон с маской +7, email, комментарий",
+      "Валидация в общем модуле — одни правила на клиенте и на сервере",
+      "Состояния loading / success / error с понятными сообщениями и спиннером",
+      "Serverless-роут на Next.js: письмо владельцу и копия пользователю, экранирование ввода, тестовый режим без SMTP",
+      "AI-эндпоинт для формулировки сообщения с ключом на сервере и демо-режимом без ключа",
     ],
+    aiHelped: "черновики компонентов и разбор ошибок сборки",
     stack: ["Next.js", "TypeScript", "SCSS", "Nodemailer"],
     links: [{ label: "GitHub", href: "https://github.com/Arishka-a/my-portfolio" }],
   },
@@ -145,19 +118,22 @@ export default function Cases() {
               </div>
 
               <div className={styles.cardDetails}>
-                {item.contributions.map((block) => (
-                  <div key={block.label} className={styles.block}>
-                    <p className={styles.blockLabel}>{block.label}</p>
-                    {block.intro && <p className={styles.intro}>{block.intro}</p>}
-                    <ul className={styles.points}>
-                      {block.points.map((point) => (
-                        <li key={point} className={styles.point}>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                <ul className={styles.points}>
+                  {item.did.map((point) => (
+                    <li key={point} className={styles.point}>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className={styles.aiBadge}>
+                  <span className={styles.aiIcon} aria-hidden="true">
+                    ✦
+                  </span>
+                  <span>
+                    <strong>С помощью ИИ:</strong> {item.aiHelped}
+                  </span>
+                </div>
               </div>
             </article>
           ))}

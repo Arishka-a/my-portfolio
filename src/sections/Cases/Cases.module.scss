@@ -24,7 +24,6 @@
   color: $color-text-muted;
 }
 
-// Горизонтальные плашки — по одной в ряд
 .grid {
   display: flex;
   flex-direction: column;
@@ -57,7 +56,6 @@
   }
 }
 
-// Левая «визитка»
 .cardMain {
   display: flex;
   flex-direction: column;
@@ -104,7 +102,7 @@
   margin-top: $space-lg;
 
   @include respond-to("lg") {
-    margin-top: auto; // прижать ссылку к низу визитки
+    margin-top: auto; 
     padding-top: $space-lg;
   }
 }
@@ -138,38 +136,18 @@
   flex-shrink: 0;
 }
 
-// Правая часть — что делала
 .cardDetails {
   display: flex;
   flex-direction: column;
   gap: $space-lg;
   flex: 1;
-
-  @include respond-to("md") {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
-
-.block {
-  flex: 1;
-  min-width: 220px;
-}
-
-.blockLabel {
-  font-size: $fs-sm;
-  font-weight: $fw-semibold;
-  color: $color-accent;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .points {
-  margin-top: $space-xs;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: $space-2xs;
+  gap: $space-xs;
 }
 
 .point {
@@ -185,4 +163,30 @@
     left: 0;
     color: $color-accent;
   }
+}
+
+.aiBadge {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-sm;
+  margin-top: auto; // прижать плашку к низу
+  padding: $space-sm $space-md;
+  font-size: $fs-sm;
+  line-height: 1.5;
+  color: $color-text;
+  background-color: $color-accent-soft;
+  border: 1px solid rgba($color-accent, 0.25);
+  border-radius: $radius-md;
+
+  strong {
+    color: $color-accent-hover;
+    font-weight: $fw-semibold;
+  }
+}
+
+.aiIcon {
+  flex-shrink: 0;
+  color: $color-accent;
+  font-size: $fs-base;
+  line-height: 1.4;
 }
