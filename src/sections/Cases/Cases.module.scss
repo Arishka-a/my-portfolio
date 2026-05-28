@@ -24,23 +24,18 @@
   color: $color-text-muted;
 }
 
+// Горизонтальные плашки — по одной в ряд
 .grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: $space-lg;
   margin-top: $space-2xl;
-
-  @include respond-to("md") {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include respond-to("lg") {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 .card {
   display: flex;
   flex-direction: column;
+  gap: $space-lg;
   padding: $space-xl;
   background-color: $color-surface;
   border: 1px solid $color-border;
@@ -51,8 +46,26 @@
 
   &:hover {
     box-shadow: $shadow-md;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     border-color: rgba($color-accent, 0.4);
+  }
+
+  @include respond-to("lg") {
+    flex-direction: row;
+    align-items: stretch;
+    gap: $space-2xl;
+  }
+}
+
+// Левая «визитка»
+.cardMain {
+  display: flex;
+  flex-direction: column;
+
+  @include respond-to("lg") {
+    flex: 0 0 290px;
+    padding-right: $space-2xl;
+    border-right: 1px solid $color-border;
   }
 }
 
@@ -67,8 +80,80 @@
   color: $color-text-muted;
 }
 
-.block {
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-xs;
   margin-top: $space-lg;
+  list-style: none;
+}
+
+.tag {
+  padding: $space-2xs $space-sm;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  background-color: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+  margin-top: $space-lg;
+
+  @include respond-to("lg") {
+    margin-top: auto; // прижать ссылку к низу визитки
+    padding-top: $space-lg;
+  }
+}
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-xs;
+  padding: $space-xs $space-lg;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  color: #fff;
+  background-color: $color-accent;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  transition: background-color $transition-base, transform $transition-base,
+    box-shadow $transition-base;
+
+  &:hover {
+    background-color: $color-accent-hover;
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.linkIcon {
+  flex-shrink: 0;
+}
+
+// Правая часть — что делала
+.cardDetails {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+  flex: 1;
+
+  @include respond-to("md") {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.block {
+  flex: 1;
+  min-width: 220px;
 }
 
 .blockLabel {
@@ -100,58 +185,4 @@
     left: 0;
     color: $color-accent;
   }
-}
-
-.stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-xs;
-  margin-top: $space-lg;
-  list-style: none;
-}
-
-.tag {
-  padding: $space-2xs $space-sm;
-  font-size: $fs-sm;
-  color: $color-text-muted;
-  background-color: $color-bg;
-  border: 1px solid $color-border;
-  border-radius: $radius-full;
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-sm;
-  margin-top: auto;
-  padding-top: $space-lg;
-}
-
-.linkButton {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-xs;
-  padding: $space-xs $space-lg;
-  font-size: $fs-sm;
-  font-weight: $fw-medium;
-  color: #fff;
-  background-color: $color-accent;
-  border-radius: $radius-md;
-  box-shadow: $shadow-sm;
-  transition: background-color $transition-base, transform $transition-base,
-    box-shadow $transition-base;
-
-  &:hover {
-    background-color: $color-accent-hover;
-    transform: translateY(-1px);
-    box-shadow: $shadow-md;
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-.linkIcon {
-  flex-shrink: 0;
 }

@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Портфолио-лендинг — frontend-разработчик
 
-## Getting Started
+Презентация себя как разработчика: стек, подход к работе,
+проекты и контакты. На странице есть **рабочая форма обратной связи** с
+серверной частью (письмо владельцу + копия пользователю) и **AI-помощник**,
+который переписывает черновик сообщения в аккуратный текст.
 
-First, run the development server:
+Полный цикл: **frontend → API → обработка ошибок → результат**.
+
+🔗 **Демо:** _TODO: ссылка на Vercel после деплоя_
+💻 **Репозиторий:** https://github.com/Arishka-a/my-portfolio
+
+---
+
+## Стек
+
+- **Next.js 16** (App Router) + **React 19**
+- **TypeScript**
+- **SCSS-модули** + дизайн-токены 
+- **Nodemailer** — отправка писем из serverless-роута
+- **Самохостинг шрифтов** через `@fontsource` 
+- **OpenAI-совместимый API** — AI-помощник для формы
+
+API-часть реализована как **route handlers Next.js** (`src/app/api/*`) —
+serverless-функции, один из разрешённых заданием вариантов бэкенда.
+
+---
+
+## Как запустить
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 1. установить зависимости
+npm install
+
+# 2. (опционально) настроить переменные окружения
+cp .env.example .env.local
+# и заполнить значения в .env.local
+
+# 3. запустить дев-сервер
+npm run dev          # http://localhost:3000
+
+# сборка и продакшн-запуск
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Переменные окружения
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Все переменные **необязательны** — без них проект запускается, а форма работает
+в тестовом режиме. Полный список — в `.env.example`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Переменная | Назначение |
+| --- | --- |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE` | реальный SMTP для отправки писем |
+| `MAIL_FROM`, `CONTACT_TO` | адрес отправителя и адрес владельца сайта |
+| `OPENAI_API_KEY`, `AI_BASE_URL`, `AI_MODEL` | AI-помощник (OpenAI-совместимый API) |
 
-## Learn More
+Если `SMTP_*` не заданы, форма использует **тестовый аккаунт Ethereal**: письма
+реально не уходят, но в ответе приходит ссылка на предпросмотр письма — так
+виден весь цикл без настройки почты.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Как реализована форма
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Поля: **имя, телефон, email, комментарий**.
 
-## Deploy on Vercel
+**Клиент** (`src/components/ContactForm/ContactForm.tsx`):
+- контролируемые поля, валидация на `blur` и при отправке;
+- поле телефона с префиксом `+7` и вводом только цифр;
+- состояния **loading → success / error** со спиннером и понятными сообщениями;
+- доступность: `label` для каждого поля, `aria-invalid`, `aria-describedby`,
+  область статуса с `aria-live`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Сервер** (`src/app/api/contact/route.ts`):
+- та же валидация, что и на клиенте (общий модуль `src/lib/validation.ts`) —
+  данные с клиента перепроверяются на сервере;
+- отправляет **два письма**: заявку владельцу (с `reply-to` на email отправителя)
+  и **копию пользователю**;
+- пользовательский ввод экранируется перед вставкой в HTML-письмо;
+- обработка ошибок: некорректный JSON → `400`, ошибки полей → `400` с разбивкой
+  по полям, сбой отправки → `502` с понятным сообщением.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Валидация вынесена в общий модуль, чтобы правила клиента и сервера не расходились.
+
+---
+
+## AI-интеграция
+
+В форме есть кнопка **«✦ Сформулировать с AI»**. Пользователь набрасывает пару
+слов в комментарии, нажимает кнопку — и `src/app/api/assist/route.ts` отправляет
+черновик в OpenAI-совместимый API, который переписывает его в вежливое деловое
+сообщение. Готовый текст подставляется обратно в поле.
+
+Ключ API хранится только на сервере и не попадает в браузер. Если ключ не задан,
+эндпоинт возвращает корректный **демо-ответ**: в поле подставляется пример, а под
+ним поясняется, что интеграция реализована, но ключ не подключён. Так фича не
+выглядит сломанной даже без оплаченного токена.
+
+---
+
+---
+
+## Как использовался ИИ при разработке
+
+Проект собирался в связке с AI-ассистентом. С его помощью делалось:
+
+- генерация черновиков компонентов, SCSS-стилей и API-роутов по описанию;
+- разбор ошибок сборки и подсказки по их исправлению;
+- варианты структуры проекта и формулировок текста.
+
+**Что правила и доделывала вручную:**
+
+- **Шрифты.** Изначально подключались через Google Fonts, что завязывало сборку
+  на внешний сервис; перевела на самохостинг через `@fontsource`. Подбирала
+  читаемый дисплейный шрифт вручную.
+- **Палитра.** Перебирала варианты, пока не остановилась на вишнёвом акценте на
+  тёплой основе.
+- **Email-транспорт.** Добавлен тестовый режим (Ethereal), чтобы форма работала
+  без настройки SMTP, и экранирование ввода в письмах.
+- **Валидация.** Вынесена в общий модуль; правила телефона переписаны под формат
+  `+7` и проверку по количеству цифр.
+- **AI-демо-режим.** Поведение без ключа доведено вручную, чтобы кнопка показывала
+  понятный пример вместо ошибки.
+- **Доступность и состояния формы** (`aria-*`, `aria-live`, поведение кнопок при
+  загрузке) проверены и доведены вручную.
+
+Весь сгенерированный код перечитывался, переписывался под структуру проекта и
+проверялся сборкой и линтером.

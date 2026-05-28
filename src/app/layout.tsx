@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/playfair-display";
+import "@fontsource-variable/lora";
 import "@fontsource-variable/manrope";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";

@@ -7,7 +7,6 @@ export interface ContactPayload {
 
 export type ContactErrors = Partial<Record<keyof ContactPayload, string>>;
 
-const PHONE_RE = /^[+]?[\d\s()-]{10,18}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateContact(data: Partial<ContactPayload>): ContactErrors {
@@ -24,10 +23,11 @@ export function validateContact(data: Partial<ContactPayload>): ContactErrors {
     errors.name = "Слишком длинное имя";
   }
 
-  if (!phone) {
+  const phoneDigits = phone.replace(/\D/g, "");
+  if (!phone || phoneDigits === "7") {
     errors.phone = "Укажите телефон";
-  } else if (!PHONE_RE.test(phone)) {
-    errors.phone = "Проверьте формат телефона";
+  } else if (phoneDigits.length !== 11) {
+    errors.phone = "Введите номер полностью";
   }
 
   if (!email) {

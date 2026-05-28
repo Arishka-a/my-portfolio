@@ -75,6 +75,14 @@ export default function ContactForm() {
     }
   };
 
+  const formatPhone = (raw: string) => {
+    let digits = raw.replace(/\D/g, ""); 
+    if (digits.startsWith("7")) digits = digits.slice(1); 
+    if (digits.startsWith("8")) digits = digits.slice(1); 
+    digits = digits.slice(0, 10); 
+    return "+7" + (digits ? " " + digits : "");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -183,7 +191,10 @@ export default function ContactForm() {
             type="tel"
             className={`${styles.input} ${errors.phone ? styles.invalid : ""}`}
             value={values.phone}
-            onChange={(e) => update("phone", e.target.value)}
+            onChange={(e) => update("phone", formatPhone(e.target.value))}
+            onFocus={() => {
+              if (!values.phone) update("phone", "+7 ");
+            }}
             onBlur={() => validateField("phone")}
             aria-invalid={!!errors.phone}
             aria-describedby={errors.phone ? "phone-error" : undefined}
