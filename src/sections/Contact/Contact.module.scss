@@ -1,0 +1,79 @@
+@use "../../styles/index" as *;
+
+.contact {
+  padding-block: $space-4xl;
+  background-color: $color-surface;
+  border-top: 1px solid $color-border;
+}
+
+.inner {
+  @include container;
+  display: grid;
+  gap: $space-2xl;
+
+  @include respond-to("lg") {
+    grid-template-columns: 1fr 1.1fr;
+    gap: $space-4xl;
+    align-items: start;
+  }
+}
+
+.heading {
+  font-size: $fs-3xl;
+  letter-spacing: -0.01em;
+
+  @include respond-to("md") {
+    font-size: $fs-4xl;
+  }
+}
+
+.lead {
+  max-width: 460px;
+  margin-top: $space-md;
+  font-size: $fs-lg;
+  color: $color-text-muted;
+}
+
+.list {
+  margin-top: $space-xl;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemLabel {
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.itemValue {
+  font-size: $fs-lg;
+  font-weight: $fw-medium;
+  color: $color-text;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.formWrap {
+  padding: $space-xl;
+  background-color: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+
+  @include respond-to("md") {
+    padding: $space-2xl;
+  }
+}
