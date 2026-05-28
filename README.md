@@ -7,7 +7,7 @@
 
 Полный цикл: **frontend → API → обработка ошибок → результат**.
 
-🔗 **Демо:** _TODO: ссылка на Vercel после деплоя_
+🔗 **Демо:** https://my-portfolio-one-sepia-45.vercel.app/
 💻 **Репозиторий:** https://github.com/Arishka-a/my-portfolio
 
 ---
