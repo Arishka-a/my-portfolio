@@ -176,3 +176,32 @@
     color: $color-accent;
   }
 }
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-sm;
+  flex-wrap: wrap;
+}
+
+.aiButton {
+  padding: $space-2xs $space-sm;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  color: $color-accent;
+  background-color: $color-accent-soft;
+  border: 1px solid rgba($color-accent, 0.25);
+  border-radius: $radius-full;
+  cursor: pointer;
+  transition: background-color $transition-base, opacity $transition-base;
+
+  &:hover:not(:disabled) {
+    background-color: rgba($color-accent, 0.18);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

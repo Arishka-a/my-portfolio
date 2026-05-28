@@ -19,6 +19,8 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [serverMessage, setServerMessage] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState("");
 
   const update = (field: keyof ContactPayload, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }));
@@ -34,6 +36,43 @@ export default function ContactForm() {
   const validateField = (field: keyof ContactPayload) => {
     const fieldErrors = validateContact(values);
     setErrors((prev) => ({ ...prev, [field]: fieldErrors[field] }));
+  };
+
+  const handleAiAssist = async () => {
+    setAiError("");
+    setAiLoading(true);
+    try {
+      const res = await fetch("/api/assist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ draft: values.comment, name: values.name }),
+      });
+      const data = await res.json();
+
+      // Демо-режим: ключа нет 
+      if (data?.demo) {
+        update(
+          "comment",
+          "Здесь появился бы текст, сформулированный AI на основе вашего черновика. " +
+            "Демо-режим: OpenAI-ключ не подключён, поэтому показан пример."
+        );
+        setAiError(
+          "✦ Демо: интеграция с AI реализована (свой серверный роут, ключ хранится на сервере, " +
+            "есть обработка ошибок). Чтобы кнопка переписывала текст по-настоящему, в .env.local " +
+            "нужно добавить OPENAI_API_KEY."
+        );
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error(data?.error || "AI-помощник сейчас недоступен");
+      }
+      update("comment", data.text);
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : "Не удалось обратиться к AI");
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -186,9 +225,20 @@ export default function ContactForm() {
       </div>
 
       <div className={styles.field}>
-        <label htmlFor="comment" className={styles.label}>
-          Комментарий
-        </label>
+        <div className={styles.labelRow}>
+          <label htmlFor="comment" className={styles.label}>
+            Комментарий
+          </label>
+          <button
+            type="button"
+            className={styles.aiButton}
+            onClick={handleAiAssist}
+            disabled={aiLoading || loading || values.comment.trim().length < 3}
+            title="Переписать черновик в аккуратное сообщение с помощью AI"
+          >
+            {aiLoading ? "AI пишет…" : "✦ Сформулировать с AI"}
+          </button>
+        </div>
         <textarea
           id="comment"
           name="comment"
@@ -209,6 +259,7 @@ export default function ContactForm() {
             {errors.comment}
           </span>
         )}
+        {aiError && <span className={styles.error}>{aiError}</span>}
       </div>
 
       {status === "error" && (
