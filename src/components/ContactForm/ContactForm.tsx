@@ -95,6 +95,7 @@ export default function ContactForm() {
 
     setStatus("loading");
     setServerMessage("");
+    setAiError(""); 
 
     try {
       const res = await fetch("/api/contact", {
@@ -146,6 +147,7 @@ export default function ContactForm() {
             setStatus("idle");
             setServerMessage("");
             setPreviewUrl(null);
+            setAiError(""); 
           }}
         >
           Отправить ещё одно
