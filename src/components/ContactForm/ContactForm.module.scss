@@ -1,0 +1,178 @@
+@use "../../styles/index" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.row {
+  display: grid;
+  gap: $space-lg;
+
+  @include respond-to("sm") {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xs;
+}
+
+.label {
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  color: $color-text;
+}
+
+.input {
+  width: 100%;
+  padding: $space-sm $space-md;
+  font-size: $fs-base;
+  color: $color-text;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &::placeholder {
+    color: rgba($color-text-muted, 0.7);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.invalid {
+  border-color: $color-error;
+
+  &:focus {
+    border-color: $color-error;
+    box-shadow: 0 0 0 3px rgba($color-error, 0.15);
+  }
+}
+
+.error {
+  font-size: $fs-sm;
+  color: $color-error;
+}
+
+.alert {
+  padding: $space-sm $space-md;
+  font-size: $fs-sm;
+  color: $color-error;
+  background-color: rgba($color-error, 0.08);
+  border: 1px solid rgba($color-error, 0.3);
+  border-radius: $radius-md;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  padding: $space-sm $space-xl;
+  font-weight: $fw-semibold;
+  color: #fff;
+  background-color: $color-accent;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background-color $transition-base;
+
+  &:hover:not(:disabled) {
+    background-color: $color-accent-hover;
+  }
+
+  &:disabled {
+    opacity: 0.75;
+    cursor: progress;
+  }
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(#fff, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hint {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-sm;
+  padding: $space-xl;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  font-size: $fs-2xl;
+  border-radius: $radius-full;
+}
+
+.iconSuccess {
+  color: $color-success;
+  background-color: rgba($color-success, 0.12);
+}
+
+.resultTitle {
+  font-size: $fs-xl;
+  font-weight: $fw-semibold;
+}
+
+.resultText {
+  color: $color-text-muted;
+}
+
+.reset {
+  margin-top: $space-sm;
+  padding: $space-xs $space-lg;
+  font-weight: $fw-medium;
+  color: $color-text;
+  background-color: transparent;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: border-color $transition-base, color $transition-base;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
