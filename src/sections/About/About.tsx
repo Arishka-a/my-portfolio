@@ -4,9 +4,9 @@ const stack = [
   "TypeScript",
   "React",
   "Next.js",
-  "JavaScript (ES6+)",
-  "HTML5",
-  "SCSS / CSS",
+  "JavaScript",
+  "HTML",
+  "CSS",
   "REST API",
   "Git",
 ];
@@ -33,10 +33,10 @@ export default function About() {
         <h2 className={styles.heading}>О себе</h2>
 
         <p className={styles.lead}>
-          Frontend-разработчик. Люблю превращать макеты в живые интерфейсы и
-          доводить продукт до рабочего состояния — от вёрстки до логики и
-          интеграции с бэкендом. Внимательна к деталям, аккуратности кода и
-          удобству пользователя.
+          Меня зовут Арина, я frontend-разработчик. Делаю адаптивные интерфейсы
+          на React и TypeScript и довожу их до рабочего состояния — от вёрстки
+          до логики и интеграции с API. Люблю аккуратный код и понятную
+          структуру, обращаю внимание на детали.
         </p>
 
         <div className={styles.block}>

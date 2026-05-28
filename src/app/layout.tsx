@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/playfair-display";
+import "@fontsource-variable/manrope";
 import "./globals.scss";
 
 export const metadata: Metadata = {
-  title: "Имя Фамилия — Frontend-разработчик",
+  title: "Арина — Frontend-разработчик",
   description:
-    "Лендинг-презентация разработчика: стек, опыт, проекты, контакты.",
+    "Лендинг-презентация frontend-разработчика: стек, опыт, проекты и контакты. React, TypeScript, Next.js.",
+  openGraph: {
+    title: "Арина — Frontend-разработчик",
+    description:
+      "Лендинг-презентация frontend-разработчика: стек, опыт, проекты и контакты.",
+    type: "website",
+    locale: "ru_RU",
+  },
 };
 
 export default function RootLayout({
