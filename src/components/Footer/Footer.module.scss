@@ -1,0 +1,30 @@
+@use "../../styles/index" as *;
+
+.footer {
+  padding-block: $space-xl;
+  border-top: 1px solid $color-border;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-sm;
+}
+
+.name {
+  font-family: $font-display;
+  font-size: $fs-lg;
+  font-weight: $fw-bold;
+}
+
+.dot {
+  color: $color-accent;
+}
+
+.copy {
+  font-size: $fs-sm;
+  color: $color-text-muted;
+}

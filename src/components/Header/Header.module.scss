@@ -1,0 +1,115 @@
+@use "../../styles/index" as *;
+
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  transition: background-color $transition-base, box-shadow $transition-base,
+    border-color $transition-base;
+  border-bottom: 1px solid transparent;
+}
+
+.scrolled {
+  background-color: rgba($color-surface, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom-color: $color-border;
+  box-shadow: $shadow-sm;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.logo {
+  font-family: $font-display;
+  font-size: $fs-xl;
+  font-weight: $fw-bold;
+  letter-spacing: -0.01em;
+}
+
+.dot {
+  color: $color-accent;
+}
+
+.nav {
+  display: none;
+  gap: $space-xl;
+
+  a {
+    position: relative;
+    font-size: $fs-sm;
+    font-weight: $fw-medium;
+    color: $color-text-muted;
+    transition: color $transition-base;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background-color: $color-accent;
+      transition: width $transition-base;
+    }
+
+    &:hover {
+      color: $color-text;
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
+  @include respond-to("md") {
+    display: flex;
+  }
+}
+
+.burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0 8px;
+  background: none;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  cursor: pointer;
+
+  span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: $color-text;
+    border-radius: 2px;
+  }
+
+  @include respond-to("md") {
+    display: none;
+  }
+}
+
+.navOpen {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  position: absolute;
+  inset: 4rem $space-md auto;
+  padding: $space-lg;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-md;
+
+  a {
+    font-size: $fs-base;
+  }
+}

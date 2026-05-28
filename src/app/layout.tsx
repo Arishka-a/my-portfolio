@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "@fontsource-variable/playfair-display";
 import "@fontsource-variable/manrope";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -21,7 +23,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
