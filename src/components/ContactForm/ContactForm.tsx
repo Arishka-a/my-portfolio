@@ -18,6 +18,7 @@ export default function ContactForm() {
   const [errors, setErrors] = useState<ContactErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverMessage, setServerMessage] = useState("");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const update = (field: keyof ContactPayload, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }));
@@ -49,13 +50,27 @@ export default function ContactForm() {
     setServerMessage("");
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        if (data?.errors) setErrors(data.errors);
+        throw new Error(data?.error || "Не удалось отправить сообщение");
+      }
+
       setStatus("success");
-      setServerMessage("Сообщение отправлено. Копия письма ушла вам на почту.");
+      setServerMessage(
+        data?.message || "Сообщение отправлено. Копия письма ушла вам на почту."
+      );
+      if (data?.previewUrl) setPreviewUrl(data.previewUrl);
       setValues(empty);
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setServerMessage("Что-то пошло не так. Попробуйте позже.");
+      setServerMessage(err instanceof Error ? err.message : "Что-то пошло не так");
     }
   };
 
@@ -69,12 +84,21 @@ export default function ContactForm() {
         </div>
         <h3 className={styles.resultTitle}>Спасибо! Сообщение отправлено</h3>
         <p className={styles.resultText}>{serverMessage}</p>
+        {previewUrl && (
+          <p className={styles.resultText}>
+            Тестовый режим. Посмотреть письмо:{" "}
+            <a href={previewUrl} target="_blank" rel="noreferrer noopener">
+              открыть превью ↗
+            </a>
+          </p>
+        )}
         <button
           type="button"
           className={styles.reset}
           onClick={() => {
             setStatus("idle");
             setServerMessage("");
+            setPreviewUrl(null);
           }}
         >
           Отправить ещё одно
