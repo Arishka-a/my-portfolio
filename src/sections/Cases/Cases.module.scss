@@ -1,0 +1,157 @@
+@use "../../styles/index" as *;
+
+.cases {
+  padding-block: $space-4xl;
+}
+
+.inner {
+  @include container;
+}
+
+.heading {
+  font-size: $fs-3xl;
+  letter-spacing: -0.01em;
+
+  @include respond-to("md") {
+    font-size: $fs-4xl;
+  }
+}
+
+.lead {
+  max-width: 680px;
+  margin-top: $space-md;
+  font-size: $fs-lg;
+  color: $color-text-muted;
+}
+
+.grid {
+  display: grid;
+  gap: $space-lg;
+  margin-top: $space-2xl;
+
+  @include respond-to("md") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to("lg") {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: $space-xl;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  transition: box-shadow $transition-base, transform $transition-base,
+    border-color $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-3px);
+    border-color: rgba($color-accent, 0.4);
+  }
+}
+
+.cardTitle {
+  font-size: $fs-xl;
+  font-weight: $fw-semibold;
+}
+
+.tagline {
+  margin-top: $space-xs;
+  font-size: $fs-base;
+  color: $color-text-muted;
+}
+
+.block {
+  margin-top: $space-lg;
+}
+
+.blockLabel {
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $color-accent;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.points {
+  margin-top: $space-xs;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xs;
+}
+
+.point {
+  position: relative;
+  padding-left: $space-md;
+  font-size: $fs-sm;
+  color: $color-text;
+  line-height: 1.5;
+
+  &::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: $color-accent;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-xs;
+  margin-top: $space-lg;
+  list-style: none;
+}
+
+.tag {
+  padding: $space-2xs $space-sm;
+  font-size: $fs-sm;
+  color: $color-text-muted;
+  background-color: $color-bg;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-sm;
+  margin-top: auto;
+  padding-top: $space-lg;
+}
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-xs;
+  padding: $space-xs $space-lg;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  color: #fff;
+  background-color: $color-accent;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  transition: background-color $transition-base, transform $transition-base,
+    box-shadow $transition-base;
+
+  &:hover {
+    background-color: $color-accent-hover;
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.linkIcon {
+  flex-shrink: 0;
+}
