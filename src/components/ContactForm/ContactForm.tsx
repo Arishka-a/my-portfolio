@@ -76,11 +76,12 @@ export default function ContactForm() {
   };
 
   const formatPhone = (raw: string) => {
-    let digits = raw.replace(/\D/g, ""); 
-    if (digits.startsWith("7")) digits = digits.slice(1); 
-    if (digits.startsWith("8")) digits = digits.slice(1); 
-    digits = digits.slice(0, 10); 
-    return "+7" + (digits ? " " + digits : "");
+    let rest = raw.replace(/^\+?7?/, "").replace(/\D/g, "");
+    if (rest.length === 11 && (rest[0] === "8" || rest[0] === "7")) {
+      rest = rest.slice(1);
+    }
+    rest = rest.slice(0, 10);
+    return "+7" + (rest ? " " + rest : " ");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
